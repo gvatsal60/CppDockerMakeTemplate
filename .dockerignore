@@ -1,0 +1,12 @@
+# VSCode
+.vscode/*
+
+# Git
+.git/*
+.gitignore
+
+# Dockerfiles
+Dockerfile
+
+# Makefiles
+Makefile
