@@ -1,4 +1,5 @@
 include Makefile.config
+include Docker.config
 
 # Targets
 all: buildImg debug
