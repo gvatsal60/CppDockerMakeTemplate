@@ -12,7 +12,10 @@ help: ## Display available targets and their descriptions
 		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # Targets
-all: buildImg debug  ## Build image and debug the code
+all: build debug  ## Build image and debug the code
+
+build:
+	buildImg
 
 # Build Docker image
 buildImg:
