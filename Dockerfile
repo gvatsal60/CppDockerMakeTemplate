@@ -1,10 +1,17 @@
 # Use Fedora as the base image
-FROM fedora as baseimg
+FROM fedora:39 AS baseimg
 
 # Metadata indicating the maintainer of this Dockerfile
 LABEL MAINTAINER="gvatsal60"
 # Description of the purpose of this image
 LABEL DESCRIPTION="Build Environment"
+
+# Add nonroot user & group
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+# Set nonroot user as default user
+USER nonroot
 
 # Update and install necessary packages
 RUN dnf -y update && \
@@ -20,24 +27,31 @@ RUN dnf -y update && \
     dnf clean all
 
 # Install gtest
-FROM baseimg as gtest
+FROM baseimg AS gtest
 ARG GTEST_VER=v1.14.0
 RUN set -x && \
     SRC=/usr/local/src/google-test-${GTEST_VER} && \
-    mkdir -p $SRC && cd $SRC && \
+    mkdir -p "$SRC" && cd "$SRC" && \
     # Download and extract gtest source code
     curl -Lfs https://github.com/google/googletest/archive/refs/tags/${GTEST_VER}.tar.gz \
-    | tar xz -C $SRC --strip-component=1 && \
+    | tar xz -C "$SRC" --strip-component=1 && \
     # Create build directory and compile gtest
     mkdir build && \
     cd build && cmake3 .. && \
     make -j8 && make install DESTDIR=/opt/gtest
 
 # Build Final Image
-FROM baseimg as buildimg
+FROM baseimg AS buildimg
+
+# Add nonroot user & group
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
 
 # Copy gtest binaries from the gtest stage
 COPY --from=gtest /opt/gtest /
+
+# Set nonroot user as default user
+USER nonroot
 
 # Set Locale
 RUN dnf -y install glibc-langpack-en
