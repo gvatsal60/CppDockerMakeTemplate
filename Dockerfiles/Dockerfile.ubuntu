@@ -7,15 +7,15 @@ LABEL MAINTAINER="gvatsal60"
 LABEL DESCRIPTION="Build Environment"
 
 # Update and install necessary packages
-RUN apt-get update && \
-    apt-get upgrade -y && \
+RUN apt update && \
+    apt upgrade -y && \
     # Install essential development tools and dependencies
-    apt-get install -y \
-    build-essential git cmake clang libssl-dev openjdk-11-jdk \
+    apt --no-install-recommends install -y \
+    build-essential curl git cmake clang libssl-dev openjdk-11-jdk \
     python3 xz-utils net-tools && \
     # Install glibc-langpack-en for locale
-    apt-get install -y language-pack-en && \
-    apt-get clean && \
+    apt --no-install-recommends install -y language-pack-en && \
+    apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install gtest
@@ -39,9 +39,9 @@ FROM base AS build
 COPY --from=gtest /opt/gtest /
 
 # Set Locale
-RUN apt-get update && \
-    apt-get install -y language-pack-en && \
-    apt-get clean && \
+RUN apt update && \
+    apt --no-install-recommends install -y language-pack-en && \
+    apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Set environment variables for locale
