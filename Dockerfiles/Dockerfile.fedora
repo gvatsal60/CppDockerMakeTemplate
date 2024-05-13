@@ -1,5 +1,5 @@
 # Use Fedora as the base image
-FROM fedora:39 AS baseimg
+FROM fedora:39 AS base
 
 # Metadata indicating the maintainer of this Dockerfile
 LABEL MAINTAINER="gvatsal60"
@@ -7,11 +7,11 @@ LABEL MAINTAINER="gvatsal60"
 LABEL DESCRIPTION="Build Environment"
 
 # Add nonroot user & group
-RUN addgroup -S nonroot \
-    && adduser -S nonroot -G nonroot
+# RUN addgroup -S nonroot \
+#     && adduser -S nonroot -G nonroot
 
 # Set nonroot user as default user
-USER nonroot
+# USER nonroot
 
 # Update and install necessary packages
 RUN dnf -y update && \
@@ -27,7 +27,7 @@ RUN dnf -y update && \
     dnf clean all
 
 # Install gtest
-FROM baseimg AS gtest
+FROM base AS gtest
 ARG GTEST_VER=v1.14.0
 RUN set -x && \
     SRC=/usr/local/src/google-test-${GTEST_VER} && \
@@ -41,17 +41,17 @@ RUN set -x && \
     make -j8 && make install DESTDIR=/opt/gtest
 
 # Build Final Image
-FROM baseimg AS buildimg
+FROM base AS build
 
 # Add nonroot user & group
-RUN addgroup -S nonroot \
-    && adduser -S nonroot -G nonroot
+# RUN addgroup -S nonroot \
+#     && adduser -S nonroot -G nonroot
 
 # Copy gtest binaries from the gtest stage
 COPY --from=gtest /opt/gtest /
 
 # Set nonroot user as default user
-USER nonroot
+# USER nonroot
 
 # Set Locale
 RUN dnf -y install glibc-langpack-en

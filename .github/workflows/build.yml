@@ -17,5 +17,5 @@ jobs:
           find . -regex '.*\.\(c\|cpp\|h\)$' -exec clang-format -i -style=file {} \;
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Image
-        run: make buildImg
+      - name: Build
+        run: make build
