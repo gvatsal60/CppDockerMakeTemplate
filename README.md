@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/gvatsal60/clg-lib-mgmt)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/gvatsal60/clg-lib-mgmt/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gvatsal60_clg-lib-mgmt&metric=alert_status)](https://sonarcloud.io/dashboard?id=gvatsal60_clg-lib-mgmt)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gvatsal60_clg-lib-mgmt&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gvatsal60_clg-lib-mgmt)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-Yes-green.svg)](https://GitHub.com/gvatsal60/clg-lib-mgmt/graphs/commit-activity)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/gvatsal60/clg-lib-mgmt.svg)](https://GitHub.com/gvatsal60/clg-lib-mgmt/pull/)
 [![GitHub issues](https://img.shields.io/github/issues/gvatsal60/clg-lib-mgmt.svg)](https://GitHub.com/gvatsal60/clg-lib-mgmt/issues/)
