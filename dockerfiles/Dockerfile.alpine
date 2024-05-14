@@ -1,5 +1,5 @@
-# Use Ubuntu as the base image
-FROM ubuntu:22.04 AS base
+# Use Alpine Linux as the base image
+FROM alpine:3.19 AS base
 
 # Metadata indicating the maintainer of this Dockerfile
 LABEL MAINTAINER="gvatsal60"
@@ -7,16 +7,25 @@ LABEL MAINTAINER="gvatsal60"
 LABEL DESCRIPTION="Build Environment"
 
 # Update and install necessary packages
-RUN apt update && \
-    apt upgrade -y && \
-    # Install essential development tools and dependencies
-    apt --no-install-recommends install -y \
-    build-essential curl git cmake clang libssl-dev openjdk-11-jdk \
-    python3 xz-utils net-tools && \
-    # Install glibc-langpack-en for locale
-    apt --no-install-recommends install -y language-pack-en && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk upgrade && \
+    # Install necessary tools
+    apk add --no-cache \
+    git \
+    build-base \
+    cmake \
+    clang \
+    openssl \
+    openssl-dev \
+    openjdk11 \
+    python3 \
+    xz \
+    net-tools \
+    gtest \
+    gtest-dev \
+    && \
+    # Clean up
+    rm -rf /var/cache/apk/*
 
 # Install gtest
 FROM base AS gtest
@@ -25,11 +34,12 @@ RUN set -x && \
     SRC=/usr/local/src/google-test-${GTEST_VER} && \
     mkdir -p "$SRC" && cd "$SRC" && \
     # Download and extract gtest source code
-    curl -Lfs https://github.com/google/googletest/archive/refs/tags/${GTEST_VER}.tar.gz \
+    wget -O - https://github.com/google/googletest/archive/${GTEST_VER}.tar.gz \
     | tar xz -C "$SRC" --strip-components=1 && \
     # Create build directory and compile gtest
     mkdir build && \
-    cd build && cmake .. && \
+    cd build && \
+    cmake .. && \
     make -j8 && make install DESTDIR=/opt/gtest
 
 # Build Final Image
@@ -38,16 +48,10 @@ FROM base AS build
 # Copy gtest binaries from the gtest stage
 COPY --from=gtest /opt/gtest /
 
-# Set Locale
-RUN apt update && \
-    apt --no-install-recommends install -y language-pack-en && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # Set environment variables for locale
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
 
 # Define the default command to run when the container starts
-ENTRYPOINT ["/bin/bash", "-c"]
+ENTRYPOINT ["/bin/ash", "-c"]

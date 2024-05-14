@@ -18,4 +18,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
-        run: make build
+        run: make docker-build
+      - name: Test
+        run: make docker-test

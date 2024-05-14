@@ -1,40 +1,38 @@
 # Include configuration files
-include Docker.mk
+include cfg/docker.mk
 
 BUILD_CMD := $(MAKE) build
 TEST_CMD := $(MAKE) test
 RUN_CMD := $(MAKE) run
 CLEAN_CMD := $(MAKE) clean
 
-DOCKER_FILE_PATH := Dockerfiles/Dockerfile.alpine
+# Define the path to the Dockerfile
+DOCKER_FILE_PATH := dockerfiles/Dockerfile.alpine
 
-# Set default goal
-.DEFAULT_GOAL := build
-
-# Help target to display available targets
-.PHONY: help
-help: ## Display available targets and their descriptions
-	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | \
-		awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+# Define the default target
+.PHONY: all
 
 # Targets
 all: build run
 
+# Target: build-image
+# Description: Builds the Docker image using the specified Dockerfile
+.PHONY: build-image
+build-image:
+	@$(DOCKER_HOST) image build -t $(DOCKER_IMG_NAME) -f $(DOCKER_FILE_PATH) $(DOCKER_BUILD_CONTEXT)
+
 # Code Build
-build:
-	$(DOCKER_HOST) image build -t $(DOCKER_IMG_FULL_NAME) -f $(DOCKER_FILE_PATH) .
-	$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_VOL) $(DOCKER_WORK_DIR) $(DOCKER_IMG_FULL_NAME) $(BUILD_CMD)
+docker-build: build-image
+	@$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_IMG_NAME) "$(BUILD_CMD)"
 
 # Test code
-test:
-	$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_VOL) $(DOCKER_WORK_DIR) $(DOCKER_IMG_FULL_NAME) $(TEST_CMD)
+docker-test: build-image
+	@$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_IMG_NAME) "$(TEST_CMD)"
 
 # Run code
-run: build
-	$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_VOL) $(DOCKER_WORK_DIR) $(DOCKER_IMG_FULL_NAME) $(RUN_CMD)
+docker-run: build-image
+	@$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_IMG_NAME) "$(RUN_CMD)"
 
 # Clean
-clean:
-	$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_VOL) $(DOCKER_WORK_DIR) $(DOCKER_IMG_FULL_NAME) $(CLEAN_CMD)
-
-.PHONY: clean test
+docker-clean: build-image
+	@$(DOCKER_HOST) container run $(DOCKER_ARG) $(DOCKER_IMG_NAME) "$(CLEAN_CMD)"
