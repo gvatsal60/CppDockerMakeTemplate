@@ -25,7 +25,9 @@ RUN apk update && \
     gtest-dev \
     && \
     # Clean up
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/* && \
+    # Create a non-root user
+    adduser -D nonroot
 
 # Install gtest
 FROM base AS gtest
@@ -52,6 +54,13 @@ COPY --from=gtest /opt/gtest /
 ENV LC_ALL=en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US.UTF-8
+
+# Copy non-root user from base image
+COPY --from=base /etc/passwd /etc/passwd
+COPY --from=base /etc/group /etc/group
+
+# Switch to non-root user
+USER nonroot
 
 # Define the default command to run when the container starts
 ENTRYPOINT ["/bin/ash", "-c"]
