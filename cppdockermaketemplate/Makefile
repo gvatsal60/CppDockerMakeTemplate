@@ -36,25 +36,25 @@ all: clean build test run
 
 build: clean $(EXEC)
 
-test: $(EXEC)
-	@$(EXEC)
+test: $(EXEC) # TODO
+	$(EXEC)
 
 run: $(EXEC)
 	@./$(EXEC)
 
 clean:
-	$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
+	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
 
 # Compile rules
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(MKDIR) $(@D)
-	$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
+	@$(MKDIR) $(@D)
+	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp
-	$(MKDIR) $(@D)
-	$(CXX) $(CXXFLAGS) -I$(SRC_DIR) -I$(TEST_DIR) -MMD -MP -c $< -o $@
+	@$(MKDIR) $(@D)
+	@$(CXX) $(CXXFLAGS) -I$(SRC_DIR) -I$(TEST_DIR) -MMD -MP -c $< -o $@
 
 # Link rule
 $(EXEC): $(OBJ) $(TESTOBJ)
-	$(MKDIR) $(@D)
-	$(CXX) $(LDFLAGS) $^ -o $@
+	@$(MKDIR) $(@D)
+	@$(CXX) $(LDFLAGS) $^ -o $@
