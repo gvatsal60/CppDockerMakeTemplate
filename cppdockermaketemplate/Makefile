@@ -1,60 +1,61 @@
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++14 -Wall -Wextra
-LDFLAGS := -pthread
+CXXFLAGS := -std=c++17 -Wall -Wextra -g
+LDFLAGS := -lgtest -lgtest_main -pthread
 
-# Commands
 MKDIR := mkdir -p
 RMDIR := rm -rf
+MV_DIR := mv -f
 
-# Directories
 INC_DIR := inc
 SRC_DIR := src
-TEST_INC := test/inc
 TEST_DIR := test/src
 BUILD_DIR := build
+DEP_DIR := $(BUILD_DIR)/dep
 BIN_DIR := bin
+TARGET := debugBin
+TEST_TARGET := testBin
 
-DEBUG_EXEC:=debugBin
-RELEASE_EXEC:=releaseBin
+SRC_EXT := cpp
+SOURCES := $(wildcard $(SRC_DIR)/*.$(SRC_EXT))
+OBJECTS := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(SOURCES:.$(SRC_EXT)=.o))
+DEPS := $(patsubst $(SRC_DIR)/%,$(DEP_DIR)/%,$(SOURCES:.$(SRC_EXT)=.d))
 
-# Files
-SRC := $(wildcard $(SRC_DIR)/*.cpp)
-TESTSRC := $(wildcard $(TEST_DIR)/*.cpp)
-OBJ := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC))
-TESTOBJ := $(patsubst $(TEST_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(TESTSRC))
-DEP := $(OBJ:.o=.d)
-TESTDEP := $(TESTOBJ:.o=.d)
-EXEC := $(BIN_DIR)/$(DEBUG_EXEC)
+TEST_SOURCES := $(wildcard $(TEST_DIR)/*.$(SRC_EXT))
+TEST_OBJECTS := $(patsubst $(TEST_DIR)/%,$(BUILD_DIR)/%,$(TEST_SOURCES:.$(SRC_EXT)=.o))
+TEST_DEPS := $(patsubst $(TEST_DIR)/%,$(DEP_DIR)/%,$(TEST_SOURCES:.$(SRC_EXT)=.d))
 
-# Targets
-.DEFAULT_GOAL := all
+CXXFLAGS += -I$(INC_DIR)
 
-.PHONY: all clean
+build: $(TARGET)
 
-all: clean build test run
+test: $(TEST_TARGET)
 
-build: clean $(EXEC)
+all: build test
 
-test: $(EXEC) # TODO
-	$(EXEC)
+$(TARGET): $(OBJECTS)
+	@$(MKDIR) $(BIN_DIR)
+	@$(CXX) $^ -o $(BIN_DIR)/$(TARGET)
 
-run: $(EXEC)
-	@./$(EXEC)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
+	@$(MKDIR) $(dir $@) $(DEP_DIR)
+	@$(CXX) $(CXXFLAGS) -MMD -MP -c -o $@ $<
+	@$(MV_DIR) $(BUILD_DIR)/$*.d $(DEP_DIR)/$*.d
 
+$(TEST_TARGET): $(filter-out $(BUILD_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS)
+	@$(MKDIR) $(BIN_DIR)
+	@$(CXX) $^ $(LDFLAGS) -o $(BIN_DIR)/$(TEST_TARGET)
+
+$(BUILD_DIR)/%.o: $(TEST_DIR)/%.$(SRC_EXT)
+	@$(MKDIR) $(dir $@) $(DEP_DIR)
+	@$(CXX) $(CXXFLAGS) -MMD -MP -c -o $@ $<
+	@$(MV_DIR) $(BUILD_DIR)/$*.d $(DEP_DIR)/$*.d
+
+-include $(DEPS) $(TEST_DEPS)
+
+run:
+	./$(BIN_DIR)/$(TARGET)
+
+.PHONY: clean
 clean:
 	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
-
-# Compile rules
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	@$(MKDIR) $(@D)
-	@$(CXX) $(CXXFLAGS) -MMD -MP -c $< -o $@
-
-$(BUILD_DIR)/%.o: $(TEST_DIR)/%.cpp
-	@$(MKDIR) $(@D)
-	@$(CXX) $(CXXFLAGS) -I$(SRC_DIR) -I$(TEST_DIR) -MMD -MP -c $< -o $@
-
-# Link rule
-$(EXEC): $(OBJ) $(TESTOBJ)
-	@$(MKDIR) $(@D)
-	@$(CXX) $(LDFLAGS) $^ -o $@

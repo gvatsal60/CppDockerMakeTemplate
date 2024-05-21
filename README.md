@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://img.shields.io/github/license/gvatsal60/CppDockerMakeTemplate)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/gvatsal60/CppDockerMakeTemplate/build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gvatsal60_clg-lib-mgmt&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gvatsal60_clg-lib-mgmt)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gvatsal60_CppDockerMakeTemplate&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=gvatsal60_CppDockerMakeTemplate)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-Yes-green.svg)](https://GitHub.com/gvatsal60/CppDockerMakeTemplate/graphs/commit-activity)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/gvatsal60/CppDockerMakeTemplate.svg)](https://GitHub.com/gvatsal60/CppDockerMakeTemplate/pull/)
 [![GitHub issues](https://img.shields.io/github/issues/gvatsal60/CppDockerMakeTemplate.svg)](https://GitHub.com/gvatsal60/CppDockerMakeTemplate/issues/)
