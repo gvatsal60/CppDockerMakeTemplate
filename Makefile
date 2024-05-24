@@ -1,5 +1,5 @@
 # Include configuration files
-include cfg/docker.mk
+include Makefiles/docker.mk
 
 BUILD_CMD := $(MAKE) build
 TEST_CMD := $(MAKE) test
@@ -10,15 +10,20 @@ CLEAN_CMD := $(MAKE) clean
 DOCKER_FILE_PATH := dockerfiles/Dockerfile.alpine
 
 # Define the default target
-.PHONY: all
+.PHONY: rename_dir
 
 # Targets
-all: build run
+all: rename_dir build run
+
+# Rule to rename the top-level directory to match PROJECT_NAME
+rename_dir:
+	@if [ ! -d $(PROJECT_NAME) ]; then \
+		mv -v cppdockermaketemplate $(PROJECT_NAME); fi
 
 # Target: build-image
 # Description: Builds the Docker image using the specified Dockerfile
 .PHONY: build-image
-build-image:
+build-image: rename_dir
 	@$(DOCKER_HOST) image build -t $(DOCKER_IMG_NAME) -f $(DOCKER_FILE_PATH) $(DOCKER_BUILD_CONTEXT)
 
 # Code Build

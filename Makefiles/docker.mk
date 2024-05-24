@@ -1,3 +1,5 @@
+include cfg/.env
+
 ## Docker Settings
 DOCKER_HOST = docker
 
@@ -12,9 +14,6 @@ DOCKER_GID ?= $(shell id -g)
 
 # Arguments to pass to the Docker command for setting user and mounting volumes.
 DOCKER_USER_ARG ?= --user $(DOCKER_UID):$(DOCKER_GID)
-
-# Project Settings (Change as per requirement)
-PROJECT_NAME := $(shell basename `git rev-parse --show-toplevel` | tr '[:upper:]' '[:lower:]')
 
 # Name of the Docker image based on the repository root directory name.
 DOCKER_BASE_IMG_NAME := $(PROJECT_NAME)

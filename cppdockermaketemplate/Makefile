@@ -54,7 +54,7 @@ $(BUILD_DIR)/%.o: $(TEST_DIR)/%.$(SRC_EXT)
 -include $(DEPS) $(TEST_DEPS)
 
 run:
-	./$(BIN_DIR)/$(TARGET)
+	@./$(BIN_DIR)/$(TARGET)
 
 .PHONY: clean
 clean:
