@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra -g
+CXXFLAGS := -std=c++2a -Wall -Wextra -g
 LDFLAGS := -lgtest -lgtest_main -pthread
 
 MKDIR := mkdir -p
@@ -26,6 +26,8 @@ TEST_OBJECTS := $(patsubst $(TEST_DIR)/%,$(BUILD_DIR)/%,$(TEST_SOURCES:.$(SRC_EX
 TEST_DEPS := $(patsubst $(TEST_DIR)/%,$(DEP_DIR)/%,$(TEST_SOURCES:.$(SRC_EXT)=.d))
 
 CXXFLAGS += -I$(INC_DIR)
+
+.PHONY= all test clean
 
 build: $(TARGET)
 
