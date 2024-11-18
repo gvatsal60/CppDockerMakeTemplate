@@ -34,6 +34,7 @@ all: build test
 build: $(TARGET)
 
 test: $(TEST_TARGET)
+	@./$(BIN_DIR)/$(TEST_TARGET)
 
 run:
 	@./$(BIN_DIR)/$(TARGET)
@@ -41,8 +42,8 @@ run:
 clean:
 	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
 
-# sonar: clean
-# 	@bear --output ../compile_commands.json --append -- $(MAKE) -j$(nproc) build
+sonar: clean
+	@bear --output ../compile_commands.json --append -- $(MAKE) build
 
 $(TARGET): $(OBJECTS)
 	@$(MKDIR) $(BIN_DIR)
