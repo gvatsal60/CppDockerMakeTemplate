@@ -27,7 +27,7 @@ TEST_DEPS := $(patsubst $(TEST_DIR)/%,$(DEP_DIR)/%,$(TEST_SOURCES:.$(SRC_EXT)=.d
 
 CXXFLAGS += -I$(INC_DIR)
 
-.PHONY= all test clean
+.PHONY: all build test clean
 
 all: build test
 
