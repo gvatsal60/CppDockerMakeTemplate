@@ -17,5 +17,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         run: make build
-    # - name: Test
-    #   run: make test
+      - name: Test
+        run: make test
