@@ -29,11 +29,20 @@ CXXFLAGS += -I$(INC_DIR)
 
 .PHONY= all test clean
 
+all: build test
+
 build: $(TARGET)
 
 test: $(TEST_TARGET)
 
-all: build test
+run:
+	@./$(BIN_DIR)/$(TARGET)
+
+clean:
+	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
+
+# sonar: clean
+# 	@bear --output ../compile_commands.json --append -- $(MAKE) -j$(nproc) build
 
 $(TARGET): $(OBJECTS)
 	@$(MKDIR) $(BIN_DIR)
@@ -54,10 +63,3 @@ $(BUILD_DIR)/%.o: $(TEST_DIR)/%.$(SRC_EXT)
 	@$(MV_DIR) $(BUILD_DIR)/$*.d $(DEP_DIR)/$*.d
 
 -include $(DEPS) $(TEST_DEPS)
-
-run:
-	@./$(BIN_DIR)/$(TARGET)
-
-.PHONY: clean
-clean:
-	@$(RMDIR) $(BUILD_DIR) $(BIN_DIR)
