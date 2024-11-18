@@ -5,6 +5,8 @@ LABEL MAINTAINER="gvatsal60"
 # Description of the purpose of this image
 LABEL DESCRIPTION="Build Environment"
 
+ARG USERNAME=vscode
+
 # Install gtest
 # FROM base AS gtest
 # ARG GTEST_VER=v1.15.2
@@ -28,3 +30,6 @@ LABEL DESCRIPTION="Build Environment"
 
 # # Copy gtest binaries from the gtest stage
 # COPY --from=gtest /opt/gtest /
+
+# Switch to non-root user
+USER ${USERNAME}

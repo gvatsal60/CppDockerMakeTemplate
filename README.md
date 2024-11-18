@@ -9,7 +9,8 @@
 [![GitHub forks](https://img.shields.io/github/forks/gvatsal60/CppDockerMakeTemplate.svg)](https://GitHub.com/gvatsal60/CppDockerMakeTemplate/network/)
 [![GitHub stars](https://img.shields.io/github/stars/gvatsal60/CppDockerMakeTemplate.svg)](https://GitHub.com/gvatsal60/CppDockerMakeTemplate/stargazers)
 
-This repository serves as a template for setting up a development environment to run C++ code inside Docker containers using Makefiles. Whether you're working on a personal project or a team-based endeavor, this template streamlines the process of containerizing your C++ applications, making them portable and easy to manage across different environments.
+This repository serves as a template for setting up a development environment to run C++ code inside Docker containers using Makefiles. Whether you're working on a personal project or a team-based endeavor,
+this template streamlines the process of containerizing your C++ applications, making them portable and easy to manage across different environments.
 
 ## Prerequisites
 
@@ -25,7 +26,8 @@ Before getting started, ensure that you have the following prerequisites install
     sudo apt-get install make
     ```
 
-  - **Windows:** For Windows users, Make is not typically installed by default. You can install it using MinGW, which provides a Unix-like environment on Windows along with a collection of GNU utilities. Follow these steps to install Make on Windows using MinGW:
+  - **Windows:** For Windows users, Make is not typically installed by default. You can install it using MinGW, which provides a Unix-like environment on Windows along with a collection of GNU utilities.
+  Follow these steps to install Make on Windows using MinGW:
     1. Download and install MinGW from [MinGW's official website](http://www.mingw.org/).
     2. During installation, make sure to select the option to install the "MSYS Basic System" component, which includes Make.
     3. After installation, add the MinGW bin directory to your system's PATH environment variable. This is typically `C:\MinGW\bin`.
