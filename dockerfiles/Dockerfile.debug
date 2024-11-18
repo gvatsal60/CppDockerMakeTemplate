@@ -1,0 +1,35 @@
+FROM mcr.microsoft.com/vscode/devcontainers/cpp:noble AS base
+
+# Metadata indicating the maintainer of this Dockerfile
+LABEL MAINTAINER="gvatsal60"
+# Description of the purpose of this image
+LABEL DESCRIPTION="Build Environment"
+
+ARG USERNAME=vscode
+
+# Install gtest
+# FROM base AS gtest
+# ARG GTEST_VER=v1.15.2
+# ARG SRC=/usr/local/src/google-test-${GTEST_VER}
+
+# # Download and extract gtest source code using ADD
+# ADD https://github.com/google/googletest/archive/${GTEST_VER}.tar.gz ${SRC}
+
+# RUN set -x && \
+#     tar xz --strip-components=1 -C ${SRC} && \
+#     cd ${SRC} && \
+#     # Create build directory and compile gtest
+#     mkdir build && \
+#     cd build && \
+#     cmake .. && \
+#     make -j$(nproc) && make install DESTDIR=/opt/gtest &&\
+#     rm -rf ${SRC}
+
+# # Build Final Image
+# FROM base AS build
+
+# # Copy gtest binaries from the gtest stage
+# COPY --from=gtest /opt/gtest /
+
+# Switch to non-root user
+USER ${USERNAME}
