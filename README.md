@@ -39,7 +39,7 @@ Follow these steps to get started with CppDockerMakeTemplate:
 1. **Clone the Repository:**
 
    ```Makefile
-   git clone https://github.com/yourusername/CppDockerMakeTemplate.git
+   git clone https://github.com/gvatsal60/CppDockerMakeTemplate.git
    cd CppDockerMakeTemplate
    ```
 

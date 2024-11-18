@@ -37,3 +37,6 @@
 
 # VSCode
 **/.vscode/*
+
+# Compile
+**/compile_commands.json
