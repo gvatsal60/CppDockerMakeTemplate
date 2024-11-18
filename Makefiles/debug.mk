@@ -1,5 +1,3 @@
-#!/usr/bin/make
-
 include Makefiles/docker.mk
 include Makefiles/rules.mk
 

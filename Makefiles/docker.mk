@@ -1,5 +1,3 @@
-#!/usr/bin/make
-
 include cfg/.env
 
 ## Docker Settings

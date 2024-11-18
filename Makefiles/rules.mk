@@ -1,5 +1,3 @@
-#!/usr/bin/make
-
 # Targets
 .PHONY: all test clean
 

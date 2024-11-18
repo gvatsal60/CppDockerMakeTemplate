@@ -1,5 +1,3 @@
-#!/usr/bin/make
-
 include cfg/.env
 include Makefiles/rules.mk
 
