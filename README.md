@@ -46,7 +46,7 @@ Follow these steps to get started with CppDockerMakeTemplate:
 2. **Build the Docker Image:**
 
    ```Makefile
-   make build_image
+   make build_img
    ```
 
 3. **Inside the Docker Container:**
