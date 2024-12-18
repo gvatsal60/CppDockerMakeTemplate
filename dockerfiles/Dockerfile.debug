@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/cpp:noble AS base
+FROM mcr.microsoft.com/devcontainers/cpp:latest AS base
 
 # Metadata indicating the maintainer of this Dockerfile
 LABEL MAINTAINER="gvatsal60"
