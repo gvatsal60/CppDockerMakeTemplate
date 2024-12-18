@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/vscode/devcontainers/cpp:noble AS base
+FROM mcr.microsoft.com/devcontainers/cpp:noble AS base
 
 # Metadata indicating the maintainer of this Dockerfile
 LABEL MAINTAINER="gvatsal60"
@@ -10,7 +10,7 @@ ARG USERNAME=vscode
 ARG GTEST_DEST=/opt/gtest
 ARG BEAR_DEST=/opt/bear
 
-# Install bear
+# Install dependencies
 RUN apt-get update \
   && apt-get -y install --no-install-recommends \
   bear \
@@ -57,10 +57,10 @@ RUN set -x \
 #   protobuf-compiler-grpc \
 #   python3
 
-# # Download and extract gtest source code using ADD
+# # Download and extract bear source code using ADD
 # ADD https://github.com/rizsotto/Bear/archive/refs/tags/${BEAR_TAR_VER} ${BEAR_SRC}
 
-# # Extract gtest source code, build directory, compile, and install gtest
+# # Extract bear source code, build directory, compile, and install bear
 # RUN set -x \
 #   && tar -xzvf ${BEAR_SRC}/${BEAR_TAR_VER} -C ${BEAR_SRC} \
 #   && mkdir -p ${BEAR_SRC}/${BEAR_BUILD_DIR} \
