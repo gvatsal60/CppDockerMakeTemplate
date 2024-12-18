@@ -24,11 +24,11 @@ build: build_img
 	@$(DOCKER_RUN_CMD) $(BUILD_CMD)
 
 # Test code
-test: build_img
+test: build
 	@$(DOCKER_RUN_CMD) $(TEST_CMD)
 
 # Run code
-run: build_img
+run: build
 	@$(DOCKER_RUN_CMD) $(RUN_CMD)
 
 # Clean
