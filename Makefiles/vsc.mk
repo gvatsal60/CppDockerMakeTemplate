@@ -9,10 +9,10 @@ all: clean build
 build:
 	@$(BUILD_CMD)
 
-test:
+test: build
 	@$(TEST_CMD)
 
-run:
+run: build
 	@$(RUN_CMD)
 
 clean:
