@@ -1,0 +1,31 @@
+name: Build Project
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["*"]
+permissions:
+  pull-requests: read
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          # Analyzes C and C++ code using the commands in `Build C and C++ code`
+          - language: c-cpp
+            build-mode: manual
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Initializes CodeQL tools and creates a codebase for analysis.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - if: ${{ matrix.build-mode == 'manual' }}
+        name: Build C and C++ code
+        run: |
+          make build
