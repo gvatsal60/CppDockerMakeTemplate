@@ -37,7 +37,7 @@ repos:
       - id: trailing-whitespace
   # Clang-format for formatting C, C++, and JavaScript files
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: "v19.1.5"
+    rev: "v19.1.6"
     hooks:
       - id: clang-format
   # ShellCheck hook for linting shell scripts
@@ -59,7 +59,7 @@ repos:
         types: [shell]
   # Actionlint for linting GitHub Actions YAML files
   - repo: https://github.com/rhysd/actionlint
-    rev: "v1.7.5"
+    rev: "v1.7.6"
     hooks:
       - id: actionlint
   # Yamlfmt for formatting YAML files
