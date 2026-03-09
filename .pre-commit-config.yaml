@@ -37,7 +37,7 @@ repos:
       - id: trailing-whitespace
   # Clang-format for formatting C, C++, and JavaScript files
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: "v21.1.8"
+    rev: "v22.1.0"
     hooks:
       - id: clang-format
   # ShellCheck hook for linting shell scripts
@@ -69,7 +69,7 @@ repos:
       - id: yamlfmt
   # Codespell for detecting common misspellings in code
   - repo: https://github.com/codespell-project/codespell
-    rev: "v2.4.1"
+    rev: "v2.4.2"
     hooks:
       - id: codespell
   # Checkmake for linting Makefiles
