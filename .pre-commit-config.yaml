@@ -37,12 +37,12 @@ repos:
       - id: trailing-whitespace
   # Clang-format for formatting C, C++, and JavaScript files
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: "v23.1.0"
+    rev: "v23.1.1"
     hooks:
       - id: clang-format
   # shfmt hook for formatting shell scripts
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.13.1-1
+    rev: v3.14.1-1
     hooks:
       - id: shfmt
         name: shfmt
